@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "JIN79PPdLhtxtpHz8/eb1GGZYuhtEG4mm+MCVBS7TSvM8cfdDiHx1BeRen3sls8TYpwtFqnMYEMbMZh5Q6wpHQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\anany\\source\\repos\\FundooNoteApplication\\ModelLayer\\ModelLayer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\anany\\.nuget\\packages\\experimental.system.messaging\\1.1.0\\experimental.system.messaging.1.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}
