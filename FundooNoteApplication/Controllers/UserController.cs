@@ -1,11 +1,14 @@
 ﻿using BusinessLayer.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Logging;
 using ModelLayer.Models;
 using RepositoryLayer.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace FundooNoteApplication.Controllers
@@ -15,9 +18,11 @@ namespace FundooNoteApplication.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserBL userBL;
-        public UserController(IUserBL userBL)
+        private readonly ILogger<UserController> logger;
+        public UserController(IUserBL userBL, ILogger<UserController> logger)
         {
             this.userBL = userBL;
+            this.logger = logger;
         }
 
         [HttpPost("Register")]
@@ -25,13 +30,16 @@ namespace FundooNoteApplication.Controllers
         {
             try
             {
+                logger.LogInformation("Registration started");
                 var result = userBL.UserRegistrations(userRegistration);
                 if(result!= null)
                 {
+                    logger.LogInformation("Registration is successful");
                     return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "User Registration successfull", Data = result });
                 }
                 else
                 {
+                    logger.LogError("Registration failed..");
                     return this.BadRequest(new { success = false, message = "User Registration unsuccessufull" });
                 }
             }
@@ -109,7 +117,71 @@ namespace FundooNoteApplication.Controllers
                 return this.BadRequest(new { success = false, message = ex.Message });
             }
         }
-        
 
+        [HttpPost("Forget-Password")]
+        public IActionResult ForgetPassword(string Email)
+        {
+            try
+            {
+                string result = userBL.ForgetPassword(Email);
+                if (result != null)
+                {
+                    return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "forget password"});
+                }
+                else
+                {
+                    return this.BadRequest(new { success = false, message = "Error" });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return this.BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPut("Reset-Password")]
+        public IActionResult ResetPassword(resetPassword reset)
+        {
+            try
+            {
+                string email = User.Claims.FirstOrDefault(x => x.Type == "Email").Value;
+                var result = userBL.ResetPassword(email, reset);
+                if (result != null)
+                {
+                    return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "reset password" });
+                }
+                else
+                {
+                    return this.BadRequest(new { success = false, message = "Error" });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return this.BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpGet("GetUserByFirstName")]
+        public IActionResult GetDetailsOfUser(string FirstName)
+        {
+            try
+            {
+                List<UserEntity> result = userBL.GetDetailsOfUser(FirstName);
+                if(result!= null)
+                {
+                    return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "Fetched Details" });
+                }
+                else
+                {
+                    return this.BadRequest(new { success = false, message = "Details Not fetched" });
+                }
+            }
+            catch(Exception ex)
+            {
+                return this.BadRequest(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

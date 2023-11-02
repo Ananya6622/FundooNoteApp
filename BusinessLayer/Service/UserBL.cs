@@ -59,5 +59,44 @@ namespace BusinessLayer.Service
         {
             return userInterfaceRL.GetAllUsers();
         }
+
+        public string ForgetPassword(string Email)
+        {
+            return userInterfaceRL.ForgetPassword(Email);
+        }
+
+        public string GenerateToken(string Email, int UserId)
+        {
+            try
+            {
+                return userInterfaceRL.GenerateToken(Email, UserId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool ResetPassword(string email, resetPassword reset)
+        {
+            try
+            {
+                return userInterfaceRL.ResetPassword(email, reset);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public List<UserEntity> GetDetailsOfUser(string firstName)
+        {
+            try
+            {
+                return userInterfaceRL.GetDetailsOfUser(firstName);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

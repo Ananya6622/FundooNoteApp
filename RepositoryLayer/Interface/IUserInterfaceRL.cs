@@ -15,5 +15,10 @@ namespace RepositoryLayer.Interface
         public bool DoesEmailExists(string email);
 
         public List<UserEntity> GetAllUsers();
+        public string ForgetPassword(string Email);
+        public string GenerateToken(string Email, int UserId);
+
+        public bool ResetPassword(string email, resetPassword reset);
+        public List<UserEntity> GetDetailsOfUser(string firstName);
     }
 }

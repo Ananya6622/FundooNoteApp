@@ -1,0 +1,33 @@
+2023-11-02 15:19:49.9445 INFO Application started...
+2023-11-02 15:19:51.0491 DEBUG Hosting starting
+2023-11-02 15:19:51.3352 INFO User profile is available. Using 'C:\Users\anany\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-11-02 15:19:51.3516 DEBUG Reading data from file 'C:\Users\anany\AppData\Local\ASP.NET\DataProtection-Keys\key-eed368dc-f21a-4e31-a063-6b7be4e0c050.xml'.
+2023-11-02 15:19:51.3658 DEBUG Found key {eed368dc-f21a-4e31-a063-6b7be4e0c050}.
+2023-11-02 15:19:51.3830 DEBUG Considering key {eed368dc-f21a-4e31-a063-6b7be4e0c050} with expiration date 2024-01-31 05:59:39Z as default key.
+2023-11-02 15:19:51.4344 DEBUG Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=3.1.32.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2023-11-02 15:19:51.4344 DEBUG Decrypting secret element using Windows DPAPI.
+2023-11-02 15:19:51.4344 DEBUG Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=3.1.32.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2023-11-02 15:19:51.4344 DEBUG Opening CNG algorithm 'AES' from provider '(null)' with chaining mode CBC.
+2023-11-02 15:19:51.4344 DEBUG Opening CNG algorithm 'SHA256' from provider '(null)' with HMAC.
+2023-11-02 15:19:51.4518 DEBUG Using key {eed368dc-f21a-4e31-a063-6b7be4e0c050} as the default key.
+2023-11-02 15:19:51.4518 DEBUG Key ring with default key {eed368dc-f21a-4e31-a063-6b7be4e0c050} was loaded during application startup.
+2023-11-02 15:19:51.8646 DEBUG Loaded hosting startup assembly FundooNoteApplication
+2023-11-02 15:19:51.8646 DEBUG Loaded hosting startup assembly Microsoft.AspNetCore.Watch.BrowserRefresh
+2023-11-02 15:19:51.8646 DEBUG Loaded hosting startup assembly Microsoft.WebTools.BrowserLink.Net
+2023-11-02 15:19:51.8646 INFO Application started. Press Ctrl+C to shut down.
+2023-11-02 15:19:51.8646 INFO Hosting environment: Development
+2023-11-02 15:19:51.8646 INFO Content root path: C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication
+2023-11-02 15:19:51.8646 DEBUG Hosting started
+2023-11-02 15:19:51.9504 INFO Request starting HTTP/2.0 GET https://localhost:44352/Swagger/index.html  
+2023-11-02 15:19:51.9895 DEBUG Wildcard detected, all requests with hosts will be allowed.
+2023-11-02 15:19:52.1582 DEBUG AuthenticationScheme: Bearer was not authenticated.
+2023-11-02 15:19:52.2354 DEBUG Response markup is scheduled to include browser refresh script injection.
+2023-11-02 15:19:52.4612 DEBUG Response markup was updated to include browser refresh script injection.
+2023-11-02 15:19:52.4680 INFO Request finished in 519.2092ms 200 text/html;charset=utf-8
+2023-11-02 15:19:52.4680 INFO Request starting HTTP/2.0 GET https://localhost:44352/_framework/aspnetcore-browser-refresh.js  
+2023-11-02 15:19:52.4680 INFO Request starting HTTP/2.0 GET https://localhost:44352/_vs/browserLink  
+2023-11-02 15:19:52.4820 INFO Request finished in 6.9177ms 200 application/javascript; charset=utf-8
+2023-11-02 15:19:52.5208 INFO Request finished in 44.4317ms 200 text/javascript; charset=UTF-8
+2023-11-02 15:19:52.6004 INFO Request starting HTTP/2.0 GET https://localhost:44352/swagger/v1/swagger.json  
+2023-11-02 15:19:52.6004 DEBUG AuthenticationScheme: Bearer was not authenticated.
+2023-11-02 15:19:52.7676 INFO Request finished in 167.2484ms 200 application/json;charset=utf-8
