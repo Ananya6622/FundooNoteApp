@@ -16,5 +16,9 @@ namespace BusinessLayer.Interface
         public string GenerateToken(string Email, int UserId);
         public bool ResetPassword(string email, resetPassword reset);
         public List<UserEntity> GetDetailsOfUser(string firstName);
+        public string LoginWithJwt(UserLogin userLogin);
+        public UserTicket CreateTicketForPassword(string emailId, string token);
+        public UserEntity GetUserById(int userId);
+        public bool UpdateUser(long userId, UserRegistration userRegistration);
     }
 }

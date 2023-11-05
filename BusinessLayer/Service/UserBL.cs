@@ -98,5 +98,49 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        public string LoginWithJwt(UserLogin userLogin)
+        {
+            try
+            {
+                return userInterfaceRL.LoginWithJwt(userLogin);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public UserTicket CreateTicketForPassword(string emailId, string token)
+        {
+            try
+            {
+                return userInterfaceRL.CreateTicketForPassword(emailId, token);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public UserEntity GetUserById(int userId)
+        {
+            try
+            {
+                return userInterfaceRL.GetUserById(userId);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool UpdateUser(long userId, UserRegistration userRegistration)
+        {
+            try
+            {
+                return userInterfaceRL.UpdateUser(userId, userRegistration);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

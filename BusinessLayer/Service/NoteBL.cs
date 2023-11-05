@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using Microsoft.AspNetCore.Http;
 using ModelLayer.Models;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
@@ -60,6 +61,84 @@ namespace BusinessLayer.Service
             catch (Exception)
             {
                 throw;
+            }
+        }
+        public bool IsPinOrNot(long noteId, long userId)
+        {
+            try
+            {
+                return noteInterfaceRL.IsPinOrNot(noteId, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool IsArchieveOrNot(long noteId, long userId)
+        {
+            try
+            {
+                return noteInterfaceRL.IsArchieveOrNot(noteId, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public bool IsTrashOrNot(long noteId, long userId)
+        {
+            try
+            {
+                return noteInterfaceRL.IsTrashOrNot(noteId, userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public NoteEntity color(long noteId, string color)
+        {
+            try
+            {
+                return noteInterfaceRL.color(noteId, color);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public NoteEntity Reminder(long noteId, DateTime remind)
+        {
+            try
+            {
+                return noteInterfaceRL.Reminder(noteId, remind);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string UploadImage(long noteId, long userId, IFormFile img)
+        {
+            try
+            {
+                return noteInterfaceRL.UploadImage(noteId, userId, img);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public NoteEntity GetNoteById(long noteId, long userId)
+        {
+            try
+            {
+                return noteInterfaceRL.GetNoteById(noteId, userId);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
     }

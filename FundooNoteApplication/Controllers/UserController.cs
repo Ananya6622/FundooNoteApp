@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using BusinessLayer.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace FundooNoteApplication.Controllers
             {
                 logger.LogInformation("Registration started");
                 var result = userBL.UserRegistrations(userRegistration);
-                if(result!= null)
+                if (result != null)
                 {
                     logger.LogInformation("Registration is successful");
                     return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "User Registration successfull", Data = result });
@@ -43,7 +44,7 @@ namespace FundooNoteApplication.Controllers
                     return this.BadRequest(new { success = false, message = "User Registration unsuccessufull" });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return this.BadRequest(new { success = false, message = ex.Message });
             }
@@ -67,7 +68,7 @@ namespace FundooNoteApplication.Controllers
             }
             catch (Exception ex)
             {
-                
+
                 return this.BadRequest(new { success = false, message = ex.Message });
             }
         }
@@ -81,7 +82,7 @@ namespace FundooNoteApplication.Controllers
 
                 if (result != null)
                 {
-                    return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "email exists"});
+                    return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "email exists" });
                 }
                 else
                 {
@@ -104,7 +105,7 @@ namespace FundooNoteApplication.Controllers
 
                 if (result != null)
                 {
-                    return this.Ok(new ResponseModel<List<UserEntity>> { Status = true, Message = "users retrieved successfully", Data = result }) ;
+                    return this.Ok(new ResponseModel<List<UserEntity>> { Status = true, Message = "users retrieved successfully", Data = result });
                 }
                 else
                 {
@@ -126,7 +127,7 @@ namespace FundooNoteApplication.Controllers
                 string result = userBL.ForgetPassword(Email);
                 if (result != null)
                 {
-                    return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "forget password"});
+                    return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "forget password" });
                 }
                 else
                 {
@@ -169,7 +170,7 @@ namespace FundooNoteApplication.Controllers
             try
             {
                 List<UserEntity> result = userBL.GetDetailsOfUser(FirstName);
-                if(result!= null)
+                if (result != null)
                 {
                     return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "Fetched Details" });
                 }
@@ -178,7 +179,72 @@ namespace FundooNoteApplication.Controllers
                     return this.BadRequest(new { success = false, message = "Details Not fetched" });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost("login-with-jwt")]
+        public IActionResult LoginWithJwt(UserLogin userLogin)
+        {
+            try
+            {
+                var result = userBL.LoginWithJwt(userLogin);
+                if (result != null)
+                {
+                    return this.Ok(new ResponseModel<string> { Status = true, Message = "login successfully with token", Data = result });
+                }
+                else
+                {
+                    return this.BadRequest(new { success = false, message = "Error" });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return this.BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpGet("Fetch-User")]
+        public IActionResult GetUserById(int userId)
+        {
+            try
+            {
+                var result = userBL.GetUserById(userId);
+
+                if (result != null)
+                {
+                    return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "fetched the data", Data = result });
+                }
+                else
+                {
+                    return this.BadRequest(new { success = false, message = "didnt fetch the data" });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return this.BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpPut("Update-User")]
+        public IActionResult UpdateUser(long userId, UserRegistration userRegistration)
+        {
+            try
+            {
+                bool result = userBL.UpdateUser(userId, userRegistration);
+                if (result != null)
+                {
+                    return this.Ok(new ResponseModel<NoteEntity> { Status = true, Message = "updated user successfully" });
+                }
+                else
+                {
+                    return this.BadRequest(new { Status = false, message = "unable to update user" });
+                }
+            }
+            catch (Exception ex)
             {
                 return this.BadRequest(new { success = false, message = ex.Message });
             }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ModelLayer.Models;
+using Newtonsoft.Json.Linq;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interface;
@@ -15,7 +16,7 @@ using System.Text;
 
 namespace RepositoryLayer.Service
 {
-    public class UserRL: IUserInterfaceRL
+    public class UserRL : IUserInterfaceRL
     {
         private readonly FundooContext fundooContext;
         private readonly IConfiguration configuration;
@@ -37,7 +38,7 @@ namespace RepositoryLayer.Service
                 userEntity.Password = EncryptPass(userRegistration.Password);
                 fundooContext.Users.Add(userEntity);
                 int result = fundooContext.SaveChanges();
-                if(result > 0)
+                if (result > 0)
                 {
                     return userEntity;
                 }
@@ -70,7 +71,7 @@ namespace RepositoryLayer.Service
         {
             try
             {
-                UserEntity userEntity = fundooContext.Users.FirstOrDefault(a => a.Email == userLogin.Email );
+                UserEntity userEntity = fundooContext.Users.FirstOrDefault(a => a.Email == userLogin.Email);
                 UserEntity userEntityy = fundooContext.Users.FirstOrDefault(a => a.Password == userLogin.Password);
 
                 if (userEntity != null)
@@ -123,7 +124,7 @@ namespace RepositoryLayer.Service
             try
             {
                 var result = fundooContext.Users.FirstOrDefault(x => x.Email == Email);
-                if(result != null)
+                if (result != null)
                 {
                     var token = this.GenerateToken(result.Email, result.UserId);
                     MSMQModel mSMQModel = new MSMQModel();
@@ -174,6 +175,94 @@ namespace RepositoryLayer.Service
             catch (Exception)
             {
                 throw;
+            }
+        }
+        public string LoginWithJwt(UserLogin userLogin)
+        {
+            try
+            {
+                var EncodedPassword = EncryptPass(userLogin.Password);
+                UserEntity result = fundooContext.Users.FirstOrDefault(x => x.Email == userLogin.Email && x.Password == EncodedPassword);
+                if (result != null)
+                {
+                    var token = this.GenerateToken(result.Email, result.UserId);
+                    return token;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public UserTicket CreateTicketForPassword(string emailId, string token)
+        {
+            try
+            {
+                var UserDetails = fundooContext.Users.FirstOrDefault(x => x.Email == emailId);
+                if (UserDetails != null)
+                {
+                    UserTicket ticketResponse = new UserTicket
+                    {
+
+                        FirstName = UserDetails.FirstName,
+                        LastName = UserDetails.LastName,
+                        EmailId = emailId,
+                        Token = token,
+                        IssueAt = DateTime.Now
+                    };
+                    return ticketResponse;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }     
+        
+        public UserEntity GetUserById(int userId)
+        {
+            try
+            {
+                UserEntity userEntity = fundooContext.Users.FirstOrDefault(x => x.UserId == userId);
+                return userEntity;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }  
+        }
+
+        public bool UpdateUser(long userId,UserRegistration userRegistration)
+        {
+            try
+            {
+                var result = fundooContext.Users.FirstOrDefault(x => x.UserId == userId);
+                if (result != null)
+                {
+                    result.FirstName = userRegistration.FirstName;
+                    result.LastName = userRegistration.LastName;
+                    result.Email = userRegistration.Email;
+                    result.Password = userRegistration.Password;
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
     }
