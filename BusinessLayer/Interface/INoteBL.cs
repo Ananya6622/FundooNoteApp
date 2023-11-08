@@ -21,5 +21,7 @@ namespace BusinessLayer.Interface
         public NoteEntity Reminder(long noteId, DateTime remind);
         public string UploadImage(long noteId, long userId, IFormFile img);
         public NoteEntity GetNoteById(long noteId, long userId);
+        public NoteEntity SearchNote(DateTime createdAt);
+        public List<NoteEntity> SearchNoteByTitle(string title);
     }
 }

@@ -141,5 +141,27 @@ namespace BusinessLayer.Service
                 throw ex;
             }
         }
+        public NoteEntity SearchNote(DateTime createdAt)
+        {
+            try
+            {
+                return noteInterfaceRL.SearchNote(createdAt);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<NoteEntity> SearchNoteByTitle(string title)
+        {
+            try
+            {
+                return noteInterfaceRL.SearchNoteByTitle(title);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

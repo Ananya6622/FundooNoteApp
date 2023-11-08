@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using BusinessLayer.Service;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -55,10 +56,12 @@ namespace FundooNoteApplication.Controllers
         {
             try
             {
+               
                 var result = userBL.UserLogins(userLogin);
 
                 if (result != null)
                 {
+                    HttpContext.Session.SetInt32("UserID", result.UserId);
                     return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "Login successful", Data = result });
                 }
                 else

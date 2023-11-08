@@ -2,11 +2,16 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using ModelLayer.Models;
+using Newtonsoft.Json;
 using RepositoryLayer.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FundooNoteApplication.Controllers
 {
@@ -15,17 +20,22 @@ namespace FundooNoteApplication.Controllers
     public class NoteController : ControllerBase
     {
         private readonly INoteBL noteBL;
-        public NoteController(INoteBL noteBL)
+        private readonly IDistributedCache distributedCache;
+        private readonly ILogger<UserController> logger;
+        public NoteController(INoteBL noteBL, IDistributedCache distributedCache, ILogger<UserController> logger)
         {
             this.noteBL = noteBL;
+            this.distributedCache = distributedCache;
+            this.logger = logger;
         }
-        [Authorize]
+        //[Authorize]
         [HttpPost("Add-Note")]
         public IActionResult AddNote(NoteModel noteModel,long UserId)
         {
             try
             {
-                int userId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+                HttpContext.Session.GetInt32("UserID");
+                //int userId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
                 var result = noteBL.AddNote(noteModel, UserId);
                 if(result != null)
                 {
@@ -51,7 +61,7 @@ namespace FundooNoteApplication.Controllers
                 List<NoteEntity> result = noteBL.GetAllNotes(UserId);
                 if (result != null)
                 {
-                    return this.Ok(new ResponseModel<List<NoteEntity>> { Status = true, Message = "retrieved all notes" });
+                    return this.Ok(new ResponseModel<List<NoteEntity>> { Status = true, Message = "retrieved all notes", Data = result });
                 }
                 else
                 {
@@ -266,5 +276,86 @@ namespace FundooNoteApplication.Controllers
                 return this.BadRequest(new { success = false, message = ex.Message });
             }
         }
+        [HttpGet("Get-all-notes-using-reddis")]
+        public async Task<IActionResult> GetAllNotesUsingRedis(int userId)
+        {
+            try
+            {
+                var CacheKey = "NotesList";
+                List<NoteEntity> NoteList;
+                byte[] RedisNoteList = await distributedCache.GetAsync(CacheKey);
+                if (RedisNoteList != null)
+                {
+                    logger.LogDebug("setting the list to cache which is requested for the first time");
+                    var SerializedNoteList = Encoding.UTF8.GetString(RedisNoteList);
+                    NoteList = JsonConvert.DeserializeObject<List<NoteEntity>>(SerializedNoteList);
+
+                }
+                else
+                {
+                    logger.LogDebug("setting a list to cache which is requested for the first time");
+                    NoteList = (List<NoteEntity>)noteBL.GetAllNotes(userId);
+                    var SeralizedNoteList = JsonConvert.SerializeObject(NoteList);
+                    var redisNoteList = Encoding.UTF8.GetBytes(SeralizedNoteList);
+                    var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(DateTime.Now.AddMinutes(10)).SetSlidingExpiration(TimeSpan.FromMinutes(5));
+                    await distributedCache.SetAsync(CacheKey, redisNoteList, options);
+
+                }
+                logger.LogInformation("got all notes list successfully from redis");
+                return Ok(NoteList);
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex, "exception thrown.. ");
+                return BadRequest(new ResponseModel<NoteEntity> { Status = false, Message = ex.Message });
+            }
+        }
+        [Authorize]
+        [HttpGet("search-note-by-date")]
+        public IActionResult searchNotes(DateTime createdAt)
+        {
+            try
+            {
+                int UserId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+                var result = noteBL.SearchNote(createdAt);
+                if(result != null)
+                {
+                    return Ok(new ResponseModel<NoteEntity> { Status = true, Message = "searched note", Data = result });
+                }
+                else
+                {
+                    return BadRequest(new ResponseModel<NoteEntity> { Status = false, Message = "note doesnt exist" });
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new ResponseModel<NoteEntity> { Status = false, Message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpGet("search-note-by-title")]
+        public IActionResult searchNotesByTitle(string title)
+        {
+            try
+            {
+                int UserId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+                List<NoteEntity> result = noteBL.SearchNoteByTitle(title);
+                if (result != null)
+                {
+                    return Ok(new ResponseModel<List<NoteEntity>> { Status = true, Message = "searched note by title", Data = result });
+                }
+                else
+                {
+                    return BadRequest(new ResponseModel<List<NoteEntity>> { Status = false, Message = "note doesnt exist" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel<List<NoteEntity>> { Status = false, Message = ex.Message });
+            }
+        }
     }
-}
+ }
+

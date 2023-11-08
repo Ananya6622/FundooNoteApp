@@ -301,6 +301,46 @@ namespace RepositoryLayer.Service
                 throw ex;
             }
         }
+
+        public NoteEntity SearchNote(DateTime createdAt)
+        {
+            try
+            {
+                var result = fundooContext.Notes.FirstOrDefault(x => x.Createat == createdAt);
+                if(result != null)
+                {
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        //write another method for searching note by title of note and show information of the notes
+        public List<NoteEntity> SearchNoteByTitle(string title)
+        {
+            try
+            {
+                List<NoteEntity> result = fundooContext.Notes.Where(x => x.Title == title).ToList();
+                if(result != null)
+                {
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
     
 }

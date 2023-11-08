@@ -51,7 +51,7 @@ namespace ModelLayer.Models
                     EnableSsl = true,
                     Credentials = new NetworkCredential("ananyaetti6622@gmail.com", "oiyz onhn fcjd bhro"),
                 };
-                mailMessage.From = new MailAddress("ananyyaetti6622@gmail.com");
+                mailMessage.From = new MailAddress("ananyaetti6622@gmail.com");
                 mailMessage.To.Add(new MailAddress(receiverEmailAddr));
                 string mailBody = $"<!DOCTYPE html>" +
                                   $"<html>" +
