@@ -116,3 +116,12 @@ C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debu
 C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\Azure.Core.dll
+C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\Azure.Core.Amqp.dll
+C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\Azure.Messaging.ServiceBus.dll
+C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\Microsoft.Azure.Amqp.dll
+C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\Microsoft.Azure.ServiceBus.dll
+C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\Microsoft.Azure.Services.AppAuthentication.dll
+C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll
+C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Clients.ActiveDirectory.dll
+C:\Users\anany\source\repos\FundooNoteApplication\FundooNoteApplication\bin\Debug\netcoreapp3.1\System.Memory.Data.dll

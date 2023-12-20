@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ModelLayer.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entity;
@@ -11,8 +12,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepositoryLayer.Service
 {
@@ -119,17 +122,51 @@ namespace RepositoryLayer.Service
 
         }
 
-        public string ForgetPassword(string Email)
+        public async Task<string> ForgetPassword(string Email, string Token)
         {
             try
             {
+                //HttpClient client = new HttpClient();
+                //client.GetAsync("http://localhost:7164/api/Function1");
+                //MessageService messageService = new MessageService();
+                //await messageService.SendMessageQueue(Email,Token);
                 var result = fundooContext.Users.FirstOrDefault(x => x.Email == Email);
                 if (result != null)
                 {
                     var token = this.GenerateToken(result.Email, result.UserId);
-                    MSMQModel mSMQModel = new MSMQModel();
-                    mSMQModel.SendMessage(token, result.Email, result.FirstName);
+                    //MSMQModel mSMQModel = new MSMQModel();
+                    //mSMQModel.SendMessage(token, result.Email, result.FirstName);
+                    MessageService messageService = new MessageService();
+                    await messageService.SendMessageQueue(Email, Token);
+                    var postData = new
+                    {
+                        Token = token,
+                        Email = result.Email 
+                    };
+
+                    
+                    var jsonData = JsonConvert.SerializeObject(postData);
+
+                    
+                    var functionUrl = "http://localhost:7164/api/Function1";
+                    using (var client = new HttpClient())
+                    {
+                        var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                        var response = await client.PostAsync(functionUrl, content);
+
+                        
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return "Password reset request sent successfully";
+                        }
+                        else
+                        {
+                            return "Failed to send password reset request";
+                        }
+                    }
+
                     return token.ToString();
+
                 }
                 else
                 {
@@ -151,6 +188,8 @@ namespace RepositoryLayer.Service
                     var user = fundooContext.Users.Where(x => x.Email == email).FirstOrDefault();
                     user.Password = reset.Password;
                     fundooContext.SaveChanges();
+                    //MessageService messageService = new MessageService();
+                    //messageService.SendMessageQueue();
                     return true;
                 }
                 else
@@ -265,5 +304,7 @@ namespace RepositoryLayer.Service
                 throw ex;
             }
         }
+
+       
     }
 }

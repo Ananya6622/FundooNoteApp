@@ -1,0 +1,10 @@
+C:\Users\anany\source\repos\FundooNoteApplication\ModelLayer\bin\Release\netcoreapp3.1\ModelLayer.deps.json
+C:\Users\anany\source\repos\FundooNoteApplication\ModelLayer\bin\Release\netcoreapp3.1\ModelLayer.dll
+C:\Users\anany\source\repos\FundooNoteApplication\ModelLayer\bin\Release\netcoreapp3.1\ModelLayer.pdb
+C:\Users\anany\source\repos\FundooNoteApplication\ModelLayer\obj\Release\netcoreapp3.1\ModelLayer.csproj.AssemblyReference.cache
+C:\Users\anany\source\repos\FundooNoteApplication\ModelLayer\obj\Release\netcoreapp3.1\ModelLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\anany\source\repos\FundooNoteApplication\ModelLayer\obj\Release\netcoreapp3.1\ModelLayer.AssemblyInfoInputs.cache
+C:\Users\anany\source\repos\FundooNoteApplication\ModelLayer\obj\Release\netcoreapp3.1\ModelLayer.AssemblyInfo.cs
+C:\Users\anany\source\repos\FundooNoteApplication\ModelLayer\obj\Release\netcoreapp3.1\ModelLayer.csproj.CoreCompileInputs.cache
+C:\Users\anany\source\repos\FundooNoteApplication\ModelLayer\obj\Release\netcoreapp3.1\ModelLayer.dll
+C:\Users\anany\source\repos\FundooNoteApplication\ModelLayer\obj\Release\netcoreapp3.1\ModelLayer.pdb

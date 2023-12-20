@@ -7,6 +7,7 @@ using RepositoryLayer.Service;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.Service
 {
@@ -60,9 +61,9 @@ namespace BusinessLayer.Service
             return userInterfaceRL.GetAllUsers();
         }
 
-        public string ForgetPassword(string Email)
+        public async Task<string> ForgetPassword(string Email, string Token)
         {
-            return userInterfaceRL.ForgetPassword(Email);
+            return await userInterfaceRL.ForgetPassword(Email,Token);
         }
 
         public string GenerateToken(string Email, int UserId)

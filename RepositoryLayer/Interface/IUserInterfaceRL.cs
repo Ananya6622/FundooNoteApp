@@ -3,6 +3,7 @@ using RepositoryLayer.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepositoryLayer.Interface
 {
@@ -15,7 +16,7 @@ namespace RepositoryLayer.Interface
         public bool DoesEmailExists(string email);
 
         public List<UserEntity> GetAllUsers();
-        public string ForgetPassword(string Email);
+        public  Task<string> ForgetPassword(string Email, string Token);
         public string GenerateToken(string Email, int UserId);
 
         public bool ResetPassword(string email, resetPassword reset);

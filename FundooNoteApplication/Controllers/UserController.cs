@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace FundooNoteApplication.Controllers
 {
@@ -123,11 +124,11 @@ namespace FundooNoteApplication.Controllers
         }
 
         [HttpPost("Forget-Password")]
-        public IActionResult ForgetPassword(string Email)
+        public async Task<IActionResult> ForgetPassword(string Email, string Token)
         {
             try
             {
-                string result = userBL.ForgetPassword(Email);
+                string result =await userBL.ForgetPassword(Email,Token);
                 if (result != null)
                 {
                     return this.Ok(new ResponseModel<UserEntity> { Status = true, Message = "forget password" });
